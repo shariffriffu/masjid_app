@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1016360285991",
+    "firebase_url": "https://masjid-754f4-default-rtdb.firebaseio.com",
+    "project_id": "masjid-754f4",
+    "storage_bucket": "masjid-754f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016360285991:android:6c44a02b8ce103cd909b02",
+        "android_client_info": {
+          "package_name": "com.example.masjid_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7peH7lF0NFxnFLmsUSKgCDfWW53J7b4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
