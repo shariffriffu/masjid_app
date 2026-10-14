@@ -5,19 +5,14 @@ Epos eposFromJson(String str) => Epos.fromJsonString(str);
 String eposToJson(Epos data) => json.encode(data.toJson());
 
 class Epos {
-  String login_screen;
- 
+  String loginScreen;
 
   Epos({
-    required this.login_screen,
-   
-
-    
+    required this.loginScreen,
   });
 
   factory Epos.fromJson(Map<String, dynamic> json) => Epos(
-        login_screen: json["login_screen"] ?? "",
-       
+        loginScreen: json["login_screen"] ?? "",
       );
 
   static Epos fromJsonString(String jsonString) {
@@ -26,6 +21,6 @@ class Epos {
   }
 
   Map<String, dynamic> toJson() => {
-        "login_screen": login_screen,
-             };
+        "login_screen": loginScreen,
+      };
 }

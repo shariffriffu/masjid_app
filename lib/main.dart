@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masjid_app/signup.dart';
@@ -7,8 +8,14 @@ import 'package:prayers_times/prayers_times.dart';
 
 import 'login.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    debugPrint('Firebase initialization error: $e');
+  }
+  runApp(const MyApp());
    // Define the geographical coordinates for the location
   Coordinates coordinates = Coordinates(21.1959, 72.7933);
 
@@ -34,42 +41,44 @@ void main() {
   );
 
   // Display prayer times for the current date
-  print('\n***** Prayer Times');
-  print('Fajr Start Time:\t${prayerTimes.fajrStartTime!}');
-  print('Fajr End Time:\t${prayerTimes.fajrEndTime!}');
-  print('Sunrise Time:\t${prayerTimes.sunrise!}');
-  print('Dhuhr Start Time:\t${prayerTimes.dhuhrStartTime!}');
-  print('Dhuhr End Time:\t${prayerTimes.dhuhrEndTime!}');
-  print('Asr Start Time:\t${prayerTimes.asrStartTime!}');
-  print('Asr End Time:\t${prayerTimes.asrEndTime!}');
-  print('Maghrib Start Time:\t${prayerTimes.maghribStartTime!}');
-  print('Maghrib End Time:\t${prayerTimes.maghribEndTime!}');
-  print('Isha Start Time:\t${prayerTimes.ishaStartTime!}');
-  print('Isha End Time:\t${prayerTimes.ishaEndTime!}');
-  print('Next Day Fajr Time:\t${prayerTimes1.fajrStartTime!}');
-  print('Tahajjud End Time:\t${prayerTimes.tahajjudEndTime!}');
-  print('Sehri End Time:\t${prayerTimes.sehri!}');
+  debugPrint('\n***** Prayer Times');
+  debugPrint('Fajr Start Time:\t${prayerTimes.fajrStartTime!}');
+  debugPrint('Fajr End Time:\t${prayerTimes.fajrEndTime!}');
+  debugPrint('Sunrise Time:\t${prayerTimes.sunrise!}');
+  debugPrint('Dhuhr Start Time:\t${prayerTimes.dhuhrStartTime!}');
+  debugPrint('Dhuhr End Time:\t${prayerTimes.dhuhrEndTime!}');
+  debugPrint('Asr Start Time:\t${prayerTimes.asrStartTime!}');
+  debugPrint('Asr End Time:\t${prayerTimes.asrEndTime!}');
+  debugPrint('Maghrib Start Time:\t${prayerTimes.maghribStartTime!}');
+  debugPrint('Maghrib End Time:\t${prayerTimes.maghribEndTime!}');
+  debugPrint('Isha Start Time:\t${prayerTimes.ishaStartTime!}');
+  debugPrint('Isha End Time:\t${prayerTimes.ishaEndTime!}');
+  debugPrint('Next Day Fajr Time:\t${prayerTimes1.fajrStartTime!}');
+  debugPrint('Tahajjud End Time:\t${prayerTimes.tahajjudEndTime!}');
+  debugPrint('Sehri End Time:\t${prayerTimes.sehri!}');
 
   // Display convenience utilities for prayer times
   String current = prayerTimes.currentPrayer();
   String next = prayerTimes.nextPrayer();
-  print('\n***** Convenience Utilities');
-  print('Current Prayer:\t$current\t${prayerTimes.timeForPrayer(current)}');
-  print('Next Prayer:\t$next\t${prayerTimes.timeForPrayer(next)}');
+  debugPrint('\n***** Convenience Utilities');
+  debugPrint('Current Prayer:\t$current\t${prayerTimes.timeForPrayer(current)}');
+  debugPrint('Next Prayer:\t$next\t${prayerTimes.timeForPrayer(next)}');
 
   // Calculate and display Sunnah times
   SunnahInsights sunnahInsights = SunnahInsights(prayerTimes);
-  print('\n***** Sunnah Times');
-  print('Middle of the Night:\t${sunnahInsights.middleOfTheNight}');
-  print('Last Third of the Night:\t${sunnahInsights.lastThirdOfTheNight}');
+  debugPrint('\n***** Sunnah Times');
+  debugPrint('Middle of the Night:\t${sunnahInsights.middleOfTheNight}');
+  debugPrint('Last Third of the Night:\t${sunnahInsights.lastThirdOfTheNight}');
 
   // Determine and display Qibla direction
-  print('\n***** Qibla Direction');
+  debugPrint('\n***** Qibla Direction');
   double qiblaDirection = Qibla.qibla(coordinates);
-  print('Qibla Direction:\t$qiblaDirection degrees');
+  debugPrint('Qibla Direction:\t$qiblaDirection degrees');
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -77,14 +86,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: SignUpPage(),
+      home: const SignUpPage(),
     );
   }
 }
 
 class PrayerTimingsPage extends StatefulWidget {
+  const PrayerTimingsPage({super.key});
+
   @override
-  _PrayerTimingsPageState createState() => _PrayerTimingsPageState();
+  State<PrayerTimingsPage> createState() => _PrayerTimingsPageState();
 }
 
 class _PrayerTimingsPageState extends State<PrayerTimingsPage> {
@@ -213,7 +224,7 @@ class _PrayerTimingsPageState extends State<PrayerTimingsPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LoginPage(),
+                    builder: (context) => const LoginPage(),
                   ));
             },
           ),
@@ -343,6 +354,7 @@ class PrayerButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const PrayerButton({
+    super.key,
     required this.prayerName,
     required this.prayerTime,
     required this.namazTime,
@@ -352,13 +364,13 @@ class PrayerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: ElevatedButton(
         style: ButtonStyle(
           padding:
-              MaterialStateProperty.all(EdgeInsets.all(0)), // Remove padding
-          backgroundColor: MaterialStateProperty.all(
-              Color.fromARGB(0, 8, 8, 8)), // Remove background color
+              WidgetStateProperty.all(const EdgeInsets.all(0)), // Remove padding
+          backgroundColor: WidgetStateProperty.all(
+              const Color.fromARGB(0, 8, 8, 8)), // Remove background color
         ),
         onPressed: onPressed,
         child: Container(

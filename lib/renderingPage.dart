@@ -1,14 +1,13 @@
-// ignore_for_file: camel_case_types, library_private_types_in_public_api, prefer_const_constructors
+// ignore_for_file: camel_case_types, file_names
 
 import 'dart:convert';
 import 'package:json_dynamic_widget/json_dynamic_widget.dart';
 
-
 class renderingPage extends StatefulWidget {
   final String jsonString;
-  const renderingPage({Key? key,required this.jsonString, required String jsonUrl}) : super(key: key);
+  const renderingPage({super.key, required this.jsonString, required String jsonUrl});
   @override
-  _renderingPageState createState() => _renderingPageState();
+  State<renderingPage> createState() => _renderingPageState();
 }
 
 class _renderingPageState extends State<renderingPage> {
@@ -19,8 +18,6 @@ class _renderingPageState extends State<renderingPage> {
     final String response = widget.jsonString;
     final data = json.decode(response);
     setState(() {
-      print("renderingPage");
-
       mapData = data;
     });
   }
@@ -30,14 +27,14 @@ class _renderingPageState extends State<renderingPage> {
     super.initState();
     _readJson();
   }
+
   @override
   Widget build(BuildContext context) {
-
     if (mapData.isEmpty) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     } else {
-      var widget = JsonWidgetData.fromDynamic(mapData, registry: registry);
-      return widget.build   (context: context);
+      var widgetData = JsonWidgetData.fromDynamic(mapData, registry: registry);
+      return widgetData.build(context: context);
     }
   }
 }
